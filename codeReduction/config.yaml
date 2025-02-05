@@ -1,0 +1,18 @@
+defaults:
+  - override hydra/job_logging: none
+
+experiment:
+  num_runs: 1
+  output_file: /scratch/dortmann/HiwiJob/CNNBilly/dummy_outputs/output.csv
+
+model:
+  weight_decay: 0.01
+  learning_rate: 0.001
+
+trainer:
+  max_epochs: 5
+  accelerator: gpu
+
+data:
+  batch_size: 64
+  data_dir: ./data
