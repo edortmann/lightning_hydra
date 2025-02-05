@@ -7,7 +7,7 @@ This repository demonstrates how to structure and streamline machine learning ex
 To install PyTorch Lightning and Hydra, use the following commands:
 
 ```bash
-pip install pytorch-lightning hydra-core
+pip install lightning hydra-core
 ```
 
 For specific versions or GPU support, refer to the official documentation:
