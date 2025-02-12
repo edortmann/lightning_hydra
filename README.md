@@ -121,10 +121,53 @@ from omegaconf import DictConfig
 
 @hydra.main(config_path=".", config_name="config")
 def main(cfg: DictConfig):
-    print(cfg.model.learning_rate)
-    print(cfg.model.weight_decay)
-    print(cfg.data.batch_size)
+    print(f"learning_rate: {cfg.model.learning_rate}")
+    print(f"weight_decay: {cfg.model.weight_decay}")
+    print(f"batch_size: {cfg.data.batch_size}")
 
 if __name__ == "__main__":
     main()
+```
+
+### Running and Overwriting Values from the Command Line
+
+You can override configuration values from the command line as follows:
+
+```bash
+python my_app.py db.learning_rate=0.1
+```
+
+Corresponding output:
+
+```
+learning_rate: 0.1
+weight_decay: 0.001
+batch_size: 64
+```
+
+### Performing Multi-Runs
+
+To run experiments with multiple configurations simultaneously, use the `--multirun` or `-m` flag:
+
+```bash
+python my_app.py --multirun db=mysql,postgresql
+```
+
+Corresponding output:
+
+```
+[HYDRA] Sweep output dir : multirun/2020-01-09/01-16-29
+[HYDRA] Launching 2 jobs locally
+[HYDRA] #0 : db=mysql
+db:
+  driver: mysql
+  pass: secret
+  user: omry
+
+[HYDRA] #1 : db=postgresql
+db:
+  driver: postgresql
+  pass: drowssap
+  timeout: 10
+  user: postgres_user
 ```
