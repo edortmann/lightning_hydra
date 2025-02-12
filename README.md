@@ -150,24 +150,14 @@ batch_size: 32
 To run experiments with multiple configurations simultaneously, use the `--multirun` or `-m` flag:
 
 ```bash
-python my_app.py --multirun db=mysql,postgresql
+python my_app.py --multirun model.learning_rate=0.1,0.01,0.001
 ```
 
 Corresponding output:
 
 ```
-[HYDRA] Sweep output dir : multirun/2020-01-09/01-16-29
-[HYDRA] Launching 2 jobs locally
-[HYDRA] #0 : db=mysql
-db:
-  driver: mysql
-  pass: secret
-  user: omry
-
-[HYDRA] #1 : db=postgresql
-db:
-  driver: postgresql
-  pass: drowssap
-  timeout: 10
-  user: postgres_user
+[2025-02-12 17:21:33,895][HYDRA] Launching 3 jobs locally
+[2025-02-12 17:21:33,895][HYDRA]        #0 : model.learning_rate=0.1
+[2025-02-12 17:21:33,974][HYDRA]        #1 : model.learning_rate=0.01
+[2025-02-12 17:21:34,053][HYDRA]        #2 : model.learning_rate=0.001
 ```
