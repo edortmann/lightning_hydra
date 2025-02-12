@@ -134,7 +134,7 @@ if __name__ == "__main__":
 You can override configuration values from the command line as follows:
 
 ```bash
-python my_app.py db.learning_rate=0.1
+python my_app.py model.learning_rate=0.1 data.batch_size=32
 ```
 
 Corresponding output:
@@ -142,7 +142,7 @@ Corresponding output:
 ```
 learning_rate: 0.1
 weight_decay: 0.001
-batch_size: 64
+batch_size: 32
 ```
 
 ### Performing Multi-Runs
