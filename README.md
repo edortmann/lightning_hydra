@@ -106,11 +106,11 @@ trainer.fit(model, dataloader)
 [Hydra](https://hydra.cc/) simplifies handling experiment configurations. Define a YAML configuration file (`config.yaml`):
 
 ```yaml
-trainer:
-  max_epochs: 10
-  gpus: 1  # Set to available GPUs
 model:
-  learning_rate: 0.001
+  learning_rate: 0.01
+  weight_decay: 0.001
+data:
+  batch_size: 64
 ```
 
 Then, integrate Hydra in your script:
@@ -121,9 +121,9 @@ from omegaconf import DictConfig
 
 @hydra.main(config_path=".", config_name="config")
 def main(cfg: DictConfig):
-    model = MyModel()
-    trainer = Trainer(**cfg.trainer)
-    trainer.fit(model, dataloader)
+    print(cfg.model.learning_rate)
+    print(cfg.model.weight_decay)
+    print(cfg.data.batch_size)
 
 if __name__ == "__main__":
     main()
