@@ -339,7 +339,7 @@ def plot_results_combined(epochs, train_losses, test_losses, train_accuracies, t
                mode='expand', borderaxespad=0, ncol=2)
 
     plt.tight_layout()
-    plt.savefig(f"{output_dir}/cnn_combined_loss_accuracy_{timestamp}.png")
+    plt.savefig(f"{output_dir}/combined_loss_accuracy_{timestamp}.png")
 
     # Plot weight norm comparisons
     fig2, ax2 = plt.subplots(figsize=(8, 6))
@@ -352,7 +352,7 @@ def plot_results_combined(epochs, train_losses, test_losses, train_accuracies, t
     ax2.grid(axis='y', linestyle="--", alpha=0.7)
 
     plt.tight_layout()
-    plt.savefig(f"{output_dir}/cnn_weight_norms_comparison_{timestamp}.png")
+    plt.savefig(f"{output_dir}/weight_norms_comparison_{timestamp}.png")
 
     # Plot evolution of head Frobenius norms if available
     if head_norm_history is not None and len(head_norm_history) > 0:
