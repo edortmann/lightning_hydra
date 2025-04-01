@@ -1,0 +1,17 @@
+model:
+  input_dim: 10
+  hidden_dim: 32
+  num_layers: 4
+  output_dim: 1
+
+data:
+  num_samples: 1000
+  input_dim: 10
+  output_dim: 1
+  batch_size: 64
+  split_ratio: 0.8  # 80% train, 20% test
+
+train:
+  epochs: 20
+  learning_rate: 0.001
+  accuracy_threshold: 0.1

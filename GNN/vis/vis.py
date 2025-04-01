@@ -8,12 +8,12 @@ from sklearn.linear_model import LinearRegression
 if __name__ == "__main__":
 
     # Load your data
-    df = pd.read_csv('bert_vis_data.csv')
+    df = pd.read_csv('gnn_regression_vis_data.csv')
 
     margin = df['margin'].to_numpy()
 
-    # change depending on whether you want to visualize absolute differences or not
-    accuracy_difference = df['train-test acc'].to_numpy()
+    # choose one of the 2 lines depending on visualizing of absolute difference or not
+    accuracy_difference = df['train-test mae'].to_numpy()
     #accuracy_difference = np.abs(df['train-test acc'].to_numpy())
 
     weight_decay = df['weight_decay'].to_numpy()
@@ -52,7 +52,7 @@ if __name__ == "__main__":
 
     # Labels and title
     plt.xlabel('Margin (Inverted Frobenius Norm)', fontsize=BIGGER_SIZE)
-    plt.ylabel('Train-Test Accuracy Difference', fontsize=BIGGER_SIZE)
+    plt.ylabel('Train-Test MAE Difference', fontsize=BIGGER_SIZE)
     #plt.ylabel('Absolute Train-Test Accuracy Difference', fontsize=BIGGER_SIZE)
     #plt.title('Margin vs Train-Test Accuracy Difference with Polynomial Regression')
 
@@ -63,5 +63,4 @@ if __name__ == "__main__":
     plt.tight_layout()
 
     # Save the plot
-    plt.savefig('bert_vis.png')
-    #plt.savefig('bert_vis_abs.png')
+    plt.savefig('gnn_regression_vis.png')

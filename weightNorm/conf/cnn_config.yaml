@@ -1,0 +1,16 @@
+model:
+  num_classes: 10                             # Number of output classes for CIFAR-10
+  backbone_feature_dims: [64, 128, 256, 512]  # For ResNet18, the intermediate layer channels are [64, 128, 256, 512]
+  hidden_dim_multi: 256                       # The hidden dimension for the multi-head approach
+  backbone_out_dim: 512                       # The final output dim of the backbone (e.g. 512 for ResNet18)
+  hidden_dim_std: 492                         # The hidden dimension for the single-head approach
+  num_layers: 4               # how many "heads" or intermediate blocks we plan to use (ResNet18 typically has 4)
+  backbone_name: resnet18
+
+data:
+  batch_size: 128
+  data_dir: ./data
+
+train:
+  epochs: 2
+  learning_rate: 0.001

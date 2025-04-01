@@ -1,0 +1,11 @@
+experiment:
+  use_multihead: True
+  detect_anomaly: True
+  epochs: 20
+
+model:
+  enc_hidden_dim: 32
+  dec_hidden_dims: [40]
+  num_layers: 1
+  lr: 1e-3
+  base_window_size: 50  # Base window size

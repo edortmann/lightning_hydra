@@ -1,0 +1,19 @@
+defaults:
+  - override hydra/hydra_logging: disabled
+  - override hydra/job_logging: disabled
+
+experiment:
+  output_dir: ./results_exp_penalty
+  data_dir: ./data
+
+model:
+  batch_size: 128
+  epochs: 50
+  learning_rate: 0.001
+  num_classes: 10  # CIFAR-10
+  hidden_dim: 256
+  num_layers: 4
+  reg_rate: 0.001
+
+# To run with a hyperparameter sweep over p and reg_rate, simply execute:
+# python resnet_multihead_lightning_exp_penalty.py --multirun model.reg_rate=0.1,0.01,0.001,0.0001,0.00001

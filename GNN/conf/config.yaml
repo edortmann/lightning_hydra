@@ -1,0 +1,27 @@
+defaults:
+  - override hydra/hydra_logging: disabled
+  - override hydra/job_logging: disabled
+
+experiment:
+  num_runs: 1
+  output_file: results.csv
+  num_epochs: 5
+  batch_size: 64
+  learning_rate: 0.01
+  weight_decay: 0.001
+  data_dir: ./data
+  target_index: 0         # Which target from QM9.y to predict (currently not used)
+  in_channels: 11         # Number of node features
+  hidden_channels: 64
+  num_layers: 5
+  out_channels: 1
+
+# To run with a hyperparameter sweep over weight_decay, simply execute:
+#   python GNN_weight_decay.py --multirun
+#   python GNN_weight_decay.py --multirun experiment.weight_decay=0.001,0.002
+
+#   python GNN_weight_decay.py --multirun experiment.weight_decay=0.000001,0.0000015,0.000002,0.0000025,0.000003,0.0000035,0.000004,0.0000045,0.000005,0.0000055,0.000006,0.0000065,0.000007,0.0000075,0.000008,0.0000085,0.000009,0.0000095,0.00001
+#   python GNN_weight_decay.py --multirun experiment.weight_decay=0.00001,0.000015,0.00002,0.000025,0.00003,0.000035,0.00004,0.000045,0.00005,0.000055,0.00006,0.000065,0.00007,0.000075,0.00008,0.000085,0.00009,0.000095,0.0001
+#   python GNN_weight_decay.py --multirun experiment.weight_decay=0.0001,0.00015,0.0002,0.00025,0.0003,0.00035,0.0004,0.00045,0.0005,0.00055,0.0006,0.00065,0.0007,0.00075,0.0008,0.00085,0.0009,0.00095,0.001
+#   python GNN_weight_decay.py --multirun experiment.weight_decay=0.001,0.0015,0.002,0.0025,0.003,0.0035,0.004,0.0045,0.005,0.0055,0.006,0.0065,0.007,0.0075,0.008,0.0085,0.009,0.0095,0.01
+#   python GNN_weight_decay.py --multirun experiment.weight_decay=0.01,0.015,0.02,0.025,0.03,0.035,0.04,0.045,0.05,0.055,0.06,0.065,0.07,0.075,0.08,0.085,0.09,0.095,0.1
