@@ -10,7 +10,7 @@ experiment:
   learning_rate: 0.01
   weight_decay: 0.001
   data_dir: ./data
-  target_index: 0         # Which target from QM9.y to predict (currently not used)
+  target_index: 1         # Which target from QM9.y to predict
   in_channels: 11         # Number of node features
   hidden_channels: 64
   num_layers: 5

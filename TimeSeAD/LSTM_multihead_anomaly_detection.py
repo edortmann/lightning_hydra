@@ -9,6 +9,7 @@ from omegaconf import OmegaConf, DictConfig
 from torch.utils.data import DataLoader, random_split
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 from datetime import datetime
 from typing import Tuple, Union, Callable, List, Type
 from torch.utils.data.dataloader import default_collate
@@ -218,6 +219,7 @@ class LSTMAutoencoderMultiHeadLightning(AE, BaseModel, L.LightningModule):
 #######################################
 @hydra.main(version_base=None, config_path="conf", config_name="config")
 def main(cfg: DictConfig):
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     # Instantiate the SMD dataset and wrap it
     smd = SMDDataset(server_id=17, training=True)
@@ -236,12 +238,12 @@ def main(cfg: DictConfig):
     lr = cfg.model.lr
     base_window_size = cfg.model.base_window_size
 
+    num_heads = 3
     if use_multihead:
-        num_heads = 3
         segment_length = base_window_size * num_heads
     else:
+        segment_length = base_window_size * num_heads
         num_heads = 1
-        segment_length = base_window_size
 
     # Instantiate WindowTransform that provides the windows
     window_transform = WindowTransform(parent=wrapped_dataset, window_size=segment_length, step_size=1, reverse=False)
@@ -269,7 +271,7 @@ def main(cfg: DictConfig):
 
     # We define a custom collate that just wraps "y" in (y, ) so the fit function of the
     # anomaly detector code sees b_targets = (target,).
-    # But we do NOT transpose x or y, so default_collate will produce (T,B,D) for them automatically (since T is first dim).
+    # But we do not transpose x or y, so default_collate will produce (T,B,D) for them automatically (since T is first dim).
     def anomaly_collate_fn(batch):
         # batch is a list of (x, y) => each (T, D)
         # default_collate => x => (T,B,D), y => (T,B,D).
@@ -293,7 +295,7 @@ def main(cfg: DictConfig):
     smd_test = SMDDataset(server_id=17, training=False)
     test_loader = DataLoader(smd_test, batch_size=16, shuffle=False)
 
-    # Instantiate model.
+    # Instantiate model
     if use_multihead:
         model = LSTMAutoencoderMultiHeadLightning(
             input_dim=input_dim,
@@ -314,11 +316,11 @@ def main(cfg: DictConfig):
             dec_hidden_dims=dec_hidden_dims,
             num_layers=num_layers,
             lr=lr,
-            window_size=base_window_size
+            window_size=segment_length
         )
         callbacks = []
 
-    # Create Trainer with callbacks.
+    # Create Trainer with callbacks
     trainer = L.Trainer(max_epochs=epochs, accelerator="cpu", callbacks=callbacks)
     trainer.fit(model, train_dataloaders=train_loader, val_dataloaders=val_loader)
 
@@ -335,7 +337,6 @@ def main(cfg: DictConfig):
         plt.ylabel("L2 Norm of Decoder LSTM Parameters")
         plt.title("Evolution of Decoder Head Norms Over Epochs")
         plt.legend()
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         plt.savefig(f"LSTM_multihead_norms_evolution_{timestamp}.png")
         plt.show()
 
@@ -361,11 +362,28 @@ def main(cfg: DictConfig):
 
         labels, scores = detector.get_labels_and_scores(test_loader)
 
-        evaluation_metrics = ['best_ts_f1_score']
+        results = []
+        evaluation_metrics = ['best_ts_f1_score', 'ts_auprc', 'best_ts_f1_score_classic', 'ts_auprc_unweighted',
+                              'best_f1_score', 'auprc']
         for metric in evaluation_metrics:
             test_score, info = test_evaluator.__getattribute__(metric)(labels, scores)
             print(f"{metric}: {test_score:.4f}")
             print(info)
+
+            row = {
+                "metric": metric,
+                "test_score": test_score,
+                "threshold": info.get("threshold", ""),
+                "precision": info.get("precision", ""),
+                "recall": info.get("recall", "")
+            }
+            results.append(row)
+
+        df = pd.DataFrame(results, columns=["metric", "test_score", "threshold", "precision", "recall"])
+        if use_multihead:
+            df.to_csv(f"evaluation_results_multihead_{timestamp}.csv", index=False)
+        else:
+            df.to_csv(f"evaluation_results_singlehead_{timestamp}.csv", index=False)
 
 
 if __name__ == '__main__':

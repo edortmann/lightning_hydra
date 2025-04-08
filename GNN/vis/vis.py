@@ -8,7 +8,7 @@ from sklearn.linear_model import LinearRegression
 if __name__ == "__main__":
 
     # Load your data
-    df = pd.read_csv('gnn_regression_vis_data.csv')
+    df = pd.read_csv('gnn_regression_vis_data_target1.csv')
 
     margin = df['margin'].to_numpy()
 
@@ -19,7 +19,7 @@ if __name__ == "__main__":
     weight_decay = df['weight_decay'].to_numpy()
 
     # Polynomial regression
-    poly = PolynomialFeatures(degree=2)
+    poly = PolynomialFeatures(degree=1)
     X_poly = poly.fit_transform(margin.reshape(-1, 1))
     poly_reg_model = LinearRegression()
     poly_reg_model.fit(X_poly, accuracy_difference)
@@ -63,4 +63,4 @@ if __name__ == "__main__":
     plt.tight_layout()
 
     # Save the plot
-    plt.savefig('gnn_regression_vis.png')
+    plt.savefig('gnn_regression_vis_target1.png')
