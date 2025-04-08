@@ -6,7 +6,7 @@ regression task.
 The foundation for this experiment is proposition 17 from the paper "A Theory of PAC Learnability of Partial Concept
 Classes" (Alon et al., FOCS 2021):
 
-$$\text{For all } \gamma, R > 0: VC(\mathbb{H}_{R, \gamma}) = \Theta \left( \dfrac{R^2}{\gamma^2} \right) \text{ and } LD(\mathbb{H}_{R, \gamma}) = \Theta \left( \dfrac{R^2}{\gamma^2} \right)$$
+$\text{For all } \gamma, R > 0: VC(\mathbb{H}_{R, \gamma}) = \Theta \left( \dfrac{R^2}{\gamma^2} \right) \text{ and } LD(\mathbb{H}_{R, \gamma}) = \Theta \left( \dfrac{R^2}{\gamma^2} \right)$
 
 Essentially, the proposition states that for all margins $\gamma$, and positive constant $R$, for the linear classifiers
 with at least margin $\gamma$, the VC dimension and the LD dimension scale inversely proportional with $\gamma^2$. 
@@ -46,5 +46,5 @@ The last figure shows the results of training the GNN to predict all 19 regressi
 ![./vis/gnn_regression_vis.png](./vis/gnn_regression_vis.png)
 
 Here, the regression line indicates that the result seems to align with the proposition. But again, it is noteworthy
-that most of the point are roughly in the same range, so the correltation is not fully clear.
+that most of the point are roughly in the same range, so the correlation is not fully clear.
 
