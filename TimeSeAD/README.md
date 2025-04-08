@@ -41,7 +41,7 @@ The next figures show the weight norms of the different heads, as well as the ev
 
 ![LSTM_multihead_final_norms.png](LSTM_multihead_final_norms.png)
 
-Looking at the norms, the figure indicates the each head has almost the same importance for prediction, but 
+Looking at the norms, the figure indicates that each head has almost the same importance for prediction, but 
 that's as expected since each head has to reconstruct a different part of the window, without help from the other
 heads.
 

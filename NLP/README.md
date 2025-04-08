@@ -5,7 +5,9 @@ This experiment analyzes the effects of training a language model with different
 The foundation for this experiment is proposition 17 from the paper "A Theory of PAC Learnability of Partial Concept
 Classes" (Alon et al., FOCS 2021):
 
-$$\text{For all } \gamma, R > 0: VC(\mathbb{H}_{R, \gamma}) = \Theta \left( \dfrac{R^2}{\gamma^2} \right) \text{ and } LD(\mathbb{H}_{R, \gamma}) = \Theta \left( \dfrac{R^2}{\gamma^2} \right)$$
+```math
+\text{For all } \gamma, R > 0: VC(\mathbb{H}_{R, \gamma}) = \Theta \left( \dfrac{R^2}{\gamma^2} \right) \text{ and } LD(\mathbb{H}_{R, \gamma}) = \Theta \left( \dfrac{R^2}{\gamma^2} \right)
+```
 
 Essentially, the proposition states that for all margins $\gamma$, and positive constant $R$, for the linear classifiers
 with at least margin $\gamma$, the VC dimension and the LD dimension scale inversely proportional with $\gamma^2$. 
