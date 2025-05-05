@@ -1,4 +1,4 @@
-#!/usr/bin/bash --login
+#!/bin/bash
 # run_experiment.sh – convenience front‑end for HPC
 # ----------------------------------------------------------------------
 # Core flags
