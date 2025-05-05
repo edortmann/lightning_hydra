@@ -10,7 +10,7 @@ for linear combination of modalities, and proposed in the "Interpretable Tensor 
 arXiv preprint arXiv:2405.04671 (2024)) paper. The idea is that each head could be seen as a different modality, thus
 applying MNL should be possible, resulting in the ability to get relevance scores for each head.
 
-### $p = 1.0, reg\_rate = 0.001$
+### $p = 1.0, reg\\_rate = 0.001$
 
 The following figure shows the norm of the weights of the different heads after training with the specified parameters:
 
@@ -37,7 +37,7 @@ and lower accuracy due to the regularization but it catches up after a sufficien
 the validation loss of the single-head model starts to rise after 15 epochs, indicating a possible overfitting. The
 multi-head doesn't show such signs, likely because of the regularization.
 
-### $p = 1.0, reg\_rate = 0.01$
+### $p = 1.0, reg\\_rate = 0.01$
 
 Compared to the section before, here a higher regularization rate is used.
 
@@ -63,7 +63,7 @@ The multi-head validation loss gets smaller much slower and the accuracy also ne
 This experiment tries to apply regularization by adding an exponential term to the loss function, depending on the head.
 Specifically, further heads that get the output of further layers are penalized more.
 
-### $reg\_rate = 0.01$
+### $reg\\_rate = 0.01$
 
 ![./results_exp_penalty/exp_reg0.01/weight_norms_comparison.png](./results_exp_penalty/exp_reg0.01/weight_norms_comparison.png)
 
