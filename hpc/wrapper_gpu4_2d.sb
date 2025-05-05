@@ -1,0 +1,56 @@
+#!/bin/bash
+#SBATCH --job-name=%x
+#SBATCH --output=logs/%x_%j_out.txt
+#SBATCH --error=logs/%x_%j_err.txt
+#SBATCH --mail-type=END,FAIL,TIME_LIMIT
+#SBATCH --time=2-00:00:00
+#SBATCH --cpus-per-task=16
+#SBATCH --mem=192G
+#SBATCH --gres=gpu:4
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+
+# ---------- helpers ---------------------------------------------------
+print_header () {
+  echo "Job ID:          $SLURM_JOB_ID"
+  echo "Job Name:        $SLURM_JOB_NAME"
+  echo "Partition:       $SLURM_JOB_PARTITION"
+  echo "Node List:       $SLURM_JOB_NODELIST"
+  echo "CPUs per Task:   $SLURM_CPUS_PER_TASK"
+  echo "Memory per Node: $SLURM_MEM_PER_NODE"
+  echo "GPUs Allocated:  ${SLURM_GPUS:-n/a}"
+  echo "Date:            $(date)"
+  echo "User:            $(whoami)"
+  echo "Host:            $(hostname)"
+  echo "Working Dir:     $SLURM_SUBMIT_DIR"
+  echo "----------------------------------------"
+}
+
+activate_env () {
+  # ENV_TYPE = conda | venv | none (default: conda)
+  # ENV_NAME = <conda‑env> | <path‑to‑venv>
+  ENV_TYPE=${ENV_TYPE:-conda}
+  ENV_NAME=${ENV_NAME:-venv}
+
+  if [[ "$ENV_TYPE" == "conda" ]]; then
+    module load anaconda3/latest
+    . $ANACONDA_HOME/etc/profile.d/conda.sh
+    conda activate "$ENV_NAME"
+  elif [[ "$ENV_TYPE" == "venv" ]]; then
+    source "$ENV_NAME/bin/activate"
+  fi
+}
+
+# ---------- main ------------------------------------------------------
+set -euo pipefail
+mkdir -p logs
+print_header
+activate_env
+echo "Python: $(python --version 2>&1)"
+cd "$SLURM_SUBMIT_DIR"
+
+echo "$@"
+eval "$@"
+
+echo "Job done."
+date
